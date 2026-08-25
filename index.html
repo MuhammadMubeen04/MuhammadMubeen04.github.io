@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,32 +15,48 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
+  <!-- Liquid glass animated background -->
+  <div class="liquid-bg" aria-hidden="true">
+    <div class="liquid-orb o1"></div>
+    <div class="liquid-orb o2"></div>
+    <div class="liquid-orb o3"></div>
+    <div class="liquid-orb o4"></div>
+  </div>
+
   <nav id="navbar" class="navbar">
-    <div class="container nav-inner">
-      <a href="#home" class="logo">My Portfolio</a>
-      <div class="nav-links">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#contact" class="nav-link">Contact</a>
+    <div class="nav-shell">
+      <div class="nav-inner">
+        <a href="#home" class="logo">My Portfolio</a>
+        <div class="nav-links">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-right">
+          <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle theme">
+            <svg class="icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            <svg class="icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </button>
+          <a href="#contact" class="nav-cta">Get in touch</a>
+          <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
       </div>
-      <a href="#contact" class="nav-cta">Get in touch</a>
-      <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
-    </div>
-    <div id="mobileMenu" class="mobile-menu">
-      <div class="mobile-menu-inner">
-        <a href="#about" class="mobile-link">About</a>
-        <a href="#skills" class="mobile-link">Skills</a>
-        <a href="#projects" class="mobile-link">Projects</a>
-        <a href="#experience" class="mobile-link">Experience</a>
-        <a href="#contact" class="mobile-link">Contact</a>
+      <div id="mobileMenu" class="mobile-menu">
+        <div class="mobile-menu-inner">
+          <a href="#about" class="mobile-link">About</a>
+          <a href="#skills" class="mobile-link">Skills</a>
+          <a href="#projects" class="mobile-link">Projects</a>
+          <a href="#experience" class="mobile-link">Experience</a>
+          <a href="#contact" class="mobile-link">Contact</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -101,7 +117,7 @@
             </span>
           </div>
         </div>
-        <div class="facts-card">
+        <div class="facts-card glass">
           <h3 class="facts-title">Quick Facts</h3>
           <ul class="facts-list">
             <li><span>▹</span> Currently building Data Analytics &amp; Machine Learning projects</li>
@@ -115,14 +131,14 @@
     </div>
   </section>
 
-  <section id="skills" class="section section-alt">
+  <section id="skills" class="section">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">Skills</h2>
         <div class="section-line"></div>
       </div>
       <div class="skills-grid skills-grid-4">
-        <div class="skill-card reveal">
+        <div class="skill-card glass reveal">
           <div class="skill-card-header">
             <div class="skill-icon cyan">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
@@ -143,7 +159,7 @@
             <span class="skill-tag">Power BI</span>
           </div>
         </div>
-        <div class="skill-card reveal">
+        <div class="skill-card glass reveal">
           <div class="skill-card-header">
             <div class="skill-icon violet">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
@@ -165,7 +181,7 @@
             <span class="skill-tag">SQLite</span>
           </div>
         </div>
-        <div class="skill-card reveal">
+        <div class="skill-card glass reveal">
           <div class="skill-card-header">
             <div class="skill-icon emerald">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
@@ -183,7 +199,7 @@
             <span class="skill-tag">Static NAT</span>
           </div>
         </div>
-        <div class="skill-card reveal">
+        <div class="skill-card glass reveal">
           <div class="skill-card-header">
             <div class="skill-icon pink">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -212,7 +228,7 @@
       </div>
       <p class="projects-intro">Selected academic and personal projects spanning networking, machine learning, AI applications, and full-stack web development.</p>
       <div class="projects-grid">
-        <article class="project-card reveal">
+        <article class="project-card glass reveal">
           <div class="project-top">
             <h3>Enterprise Network &amp; Security Infrastructure</h3>
             <span class="project-badge badge-violet">Networking &amp; Security</span>
@@ -227,7 +243,7 @@
             <span>Network Security</span>
           </div>
         </article>
-        <article class="project-card reveal">
+        <article class="project-card glass reveal">
           <div class="project-top">
             <h3>AI-Driven Predictive Sales &amp; Customer Analytics</h3>
             <span class="project-badge badge-emerald">Machine Learning</span>
@@ -241,7 +257,7 @@
             <span>Jupyter Notebooks</span>
           </div>
         </article>
-        <article class="project-card reveal">
+        <article class="project-card glass reveal">
           <div class="project-top">
             <h3>Multi-Model LLM &amp; RAG Assistant Application</h3>
             <span class="project-badge badge-cyan">AI &amp; Web</span>
@@ -255,7 +271,7 @@
             <span>Git</span>
           </div>
         </article>
-        <article class="project-card reveal">
+        <article class="project-card glass reveal">
           <div class="project-top">
             <h3>Secure Relational Banking &amp; Transaction System</h3>
             <span class="project-badge badge-amber">Full-Stack</span>
@@ -269,7 +285,7 @@
             <span>Tailwind CSS</span>
           </div>
         </article>
-        <article class="project-card reveal">
+        <article class="project-card glass reveal">
           <div class="project-top">
             <h3>NextGen Gaming Content Showcase Platform</h3>
             <span class="project-badge badge-amber">Web Dev</span>
@@ -283,7 +299,7 @@
             <span>HTML5/CSS3</span>
           </div>
         </article>
-        <article class="project-card reveal">
+        <article class="project-card glass reveal">
           <div class="project-top">
             <h3>Interactive Web-Based Assessment &amp; Quiz System</h3>
             <span class="project-badge badge-amber">Web Dev</span>
@@ -300,7 +316,7 @@
     </div>
   </section>
 
-  <section id="experience" class="section section-alt">
+  <section id="experience" class="section">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">Experience</h2>
@@ -311,7 +327,7 @@
         <div class="timeline-items">
           <div class="timeline-item reveal">
             <div class="timeline-dot"></div>
-            <div class="exp-card">
+            <div class="exp-card glass">
               <div class="exp-header">
                 <h3>Data Analyst</h3>
                 <span class="exp-date">Jul 2025 – Present</span>
@@ -326,7 +342,7 @@
           </div>
           <div class="timeline-item reveal">
             <div class="timeline-dot"></div>
-            <div class="exp-card">
+            <div class="exp-card glass">
               <div class="exp-header">
                 <h3>Machine Learning Engineer</h3>
                 <span class="exp-date">Jan 2025 – Present</span>
@@ -341,7 +357,7 @@
           </div>
           <div class="timeline-item reveal">
             <div class="timeline-dot"></div>
-            <div class="exp-card">
+            <div class="exp-card glass">
               <div class="exp-header">
                 <h3>Freelance Digital &amp; Technical Content Specialist</h3>
                 <span class="exp-date">Jan 2026 – Present</span>
@@ -366,10 +382,10 @@
         <div class="section-line"></div>
       </div>
       <div class="edu-list edu-list-full">
-        <div class="edu-card reveal">
+        <div class="edu-card glass reveal">
           <div class="edu-card-top">
             <div>
-              <h3>Information Technology | Bachelor of Science (BS)</h3>
+              <h3>Bachelor of Science in Information Technology (BS IT)</h3>
               <p class="edu-school">University of Management and Technology (UMT) · Lahore, Pakistan</p>
             </div>
             <span class="edu-date">Oct 2023 – Oct 2027</span>
@@ -377,31 +393,31 @@
           <p class="edu-meta">CGPA: 3.02 / 4.00</p>
           <p class="edu-coursework"><strong>Relevant Coursework:</strong> Machine Learning, Cloud Computing, Data Structures, Analysis of Algorithms, Database Systems, Network Security</p>
         </div>
-        <div class="edu-card reveal">
+        <div class="edu-card glass reveal">
           <div class="edu-card-top">
             <div>
-              <h3>Pre-Engineering | F.Sc.</h3>
+              <h3>Intermediate in Pre-Engineering (FSc)</h3>
               <p class="edu-school muted">Punjab Group of Colleges · Lahore, Pakistan</p>
             </div>
             <span class="edu-date muted">Sep 2021 – Jun 2023</span>
           </div>
         </div>
-        <div class="edu-card reveal">
+        <div class="edu-card glass reveal">
           <div class="edu-card-top">
             <div>
-              <h3>Computer Science | Matriculation</h3>
+              <h3>Matriculation (Science)</h3>
               <p class="edu-school muted">H.Q School System · Lahore, Pakistan</p>
             </div>
-            <span class="edu-date muted">Mar 2019 – Aug 2021</span>
+            <span class="edu-date muted">Mar 2018 – Aug 2021</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="section section-alt">
+  <section id="contact" class="section">
     <div class="container">
-      <div class="contact-inner reveal">
+      <div class="contact-inner glass glass-strong reveal">
         <p class="contact-label">What's next?</p>
         <h2 class="contact-title">Get In Touch</h2>
         <p class="contact-desc">I am actively seeking internship and entry-level opportunities in Data Analytics, Machine Learning, and Software Development. Whether you have a project idea, a position to discuss, or simply want to connect, feel free to reach out—I would love to hear from you.</p>
@@ -411,7 +427,6 @@
             mubeen.salman788@gmail.com
           </a>
           <a href="tel:+923214889391" class="btn btn-outline">+92 321 4889391</a>
-          </a>
         </div>
         <p class="contact-location">Lahore, Pakistan</p>
         <div class="contact-socials">
@@ -434,6 +449,6 @@
     </div>
   </footer>
 
-  <script src="main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
