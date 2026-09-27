@@ -1,7 +1,3 @@
-/**
- * Mubeen Salman — Portfolio
- * Refined interactions: theme, scroll, tilt, ripple, smooth nav
- */
 (function () {
   'use strict';
 
@@ -107,7 +103,7 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
     revealElements.forEach(function (el) { io.observe(el); });
   } else {
     function revealOnScroll() {
@@ -122,7 +118,7 @@
 
   /* Pointer spotlight + light tilt on cards */
   var canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var cards = document.querySelectorAll('.skill-card, .project-card, .exp-card, .edu-card, .facts-card');
+  var cards = document.querySelectorAll('.skill-card, .exp-card, .edu-card, .facts-card');
   cards.forEach(function (card) {
     card.classList.add('tilt-card');
     card.addEventListener('pointermove', function (e) {
@@ -196,6 +192,18 @@
     }, { threshold: 0.2 });
     footIo.observe(footer);
   }
+
+  /* Pause background orbs briefly while scrolling (smoother project grid) */
+  var orbTimer = null;
+  var bg = document.querySelector('.liquid-bg');
+  window.addEventListener('scroll', function () {
+    if (!bg) return;
+    bg.classList.add('is-scrolling');
+    clearTimeout(orbTimer);
+    orbTimer = setTimeout(function () {
+      bg.classList.remove('is-scrolling');
+    }, 180);
+  }, { passive: true });
 
   /* Smooth anchors */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
