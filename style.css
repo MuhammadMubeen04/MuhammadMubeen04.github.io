@@ -3258,10 +3258,7 @@ a.btn-outline:hover {
 }
 
 /* Project cards: keep liquid glass look, GPU-friendly for scroll */
-.projects-grid {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
-}
+
 
 .project-card {
   /* Cheaper than 28px across 18 cards — still clearly glass */
@@ -3269,8 +3266,7 @@ a.btn-outline:hover {
   -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
   will-change: auto !important;
   contain: layout style paint;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 420px;
+  
   /* Promote stable layer without continuous will-change */
   transform: translateZ(0);
 }
@@ -3308,4 +3304,579 @@ a.btn-outline:hover {
 /* Freeze orb animation during active scroll for smoother project section */
 .liquid-bg.is-scrolling .liquid-orb {
   animation-play-state: paused !important;
+}
+
+
+/* ========== MOBILE PROJECTS FIX + SMOOTHER SCROLL ========== */
+
+/* Ensure all project cards always render and stack on mobile */
+.projects-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1.1rem !important;
+  content-visibility: visible !important;
+  contain: none !important;
+}
+@media (min-width: 700px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (min-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+.project-card {
+  content-visibility: visible !important;
+  contain: layout style !important;
+  /* Lighter glass = much less scroll lag, still looks glassy */
+  backdrop-filter: blur(12px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+  will-change: auto !important;
+  transform: none;
+}
+
+.project-card.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
+}
+.project-card.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Mobile: shorter cards so more than one fits on screen */
+@media (max-width: 699px) {
+  .project-banner {
+    min-height: auto !important;
+    padding: 1.15rem 1.1rem 1rem !important;
+  }
+  .project-banner h3 {
+    min-height: 0 !important;
+    font-size: 1rem !important;
+  }
+  .project-body {
+    min-height: 0 !important;
+    padding: 1.05rem 1.1rem 1.15rem !important;
+  }
+  .project-tech {
+    min-height: 0 !important;
+  }
+  .project-desc {
+    font-size: 0.84rem !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Much lighter effects on mobile for smooth scroll */
+  .project-card,
+  .skill-card,
+  .exp-card,
+  .edu-card,
+  .facts-card,
+  .cert-card,
+  .contact-inner,
+  .glass {
+    backdrop-filter: blur(10px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(130%) !important;
+  }
+
+  .navbar .nav-inner {
+    backdrop-filter: blur(16px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
+  }
+
+  /* Smaller / softer orbs on mobile */
+  .liquid-orb {
+    filter: blur(70px) !important;
+    animation-duration: 30s !important;
+  }
+  .liquid-orb.o1 { width: 320px !important; height: 320px !important; }
+  .liquid-orb.o2 { width: 280px !important; height: 280px !important; }
+  .liquid-orb.o3 { width: 300px !important; height: 300px !important; }
+  .liquid-orb.o4 { width: 240px !important; height: 240px !important; }
+
+  /* Disable expensive hover lifts on touch */
+  .project-card:hover,
+  .skill-card:hover,
+  .exp-card:hover,
+  .edu-card:hover {
+    transform: none !important;
+  }
+}
+
+/* Desktop/laptop still 3-col, slightly lighter blur for scroll */
+@media (min-width: 1024px) {
+  .project-card {
+    backdrop-filter: blur(14px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(150%) !important;
+  }
+}
+
+/* Global smoother scrolling */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Pause orbs while scrolling (already in JS) — also reduce paint */
+.liquid-bg.is-scrolling .liquid-orb {
+  animation-play-state: paused !important;
+}
+.liquid-bg.is-scrolling {
+  pointer-events: none;
+}
+
+/* Avoid continuous GPU layer promotion that causes jank */
+.skill-card,
+.exp-card,
+.edu-card,
+.cert-card {
+  will-change: auto !important;
+}
+
+
+/* ========== ZERO LAG PROJECT SCROLL ==========
+   Keep glass *look* without expensive backdrop-filter on 18 cards during scroll.
+   Navbar / hero still use real blur glass.
+   ============================================ */
+
+.project-card,
+.project-card.glass,
+.projects-grid .project-card {
+  /* NO backdrop-filter on project cards — main lag source */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* Simulated liquid glass with opaque layered fill */
+  background:
+    linear-gradient(
+      165deg,
+      rgba(22, 32, 52, 0.94) 0%,
+      rgba(14, 22, 40, 0.96) 50%,
+      rgba(12, 18, 34, 0.97) 100%
+    ) !important;
+  border: 1px solid rgba(34, 211, 238, 0.2) !important;
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  will-change: auto !important;
+  contain: layout style !important;
+  transform: none !important;
+  filter: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+[data-theme="light"] .project-card,
+[data-theme="light"] .project-card.glass,
+[data-theme="light"] .projects-grid .project-card {
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(244, 248, 252, 0.94) 100%
+    ) !important;
+  border: 1px solid rgba(8, 145, 178, 0.18) !important;
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+/* Banner simulated glass — no blur */
+.project-banner {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 40, 55, 0.98) 0%,
+    rgba(20, 30, 60, 0.96) 50%,
+    rgba(30, 24, 58, 0.97) 100%
+  ) !important;
+}
+[data-theme="light"] .project-banner {
+  background: linear-gradient(
+    135deg,
+    rgba(220, 240, 248, 0.98) 0%,
+    rgba(230, 232, 250, 0.96) 100%
+  ) !important;
+}
+
+.project-body {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(8, 14, 26, 0.5) !important;
+}
+[data-theme="light"] .project-body {
+  background: rgba(248, 250, 252, 0.7) !important;
+}
+
+/* Hover: light only — no transform lag */
+.project-card:hover {
+  transform: none !important;
+  border-color: rgba(34, 211, 238, 0.4) !important;
+  box-shadow:
+    0 10px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(34, 211, 238, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Instant reveal — no staggered lag pile-up */
+.project-card.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  filter: none !important;
+}
+.project-card.reveal.visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.projects-grid .project-card.reveal.d1,
+.projects-grid .project-card.reveal.d2,
+.projects-grid .project-card.reveal.d3,
+.projects-grid .project-card.reveal.d4,
+.projects-grid .project-card.reveal.d5,
+.projects-grid .project-card.reveal.d6,
+.projects-grid .project-card.reveal.d7,
+.projects-grid .project-card.reveal.d8,
+.projects-grid .project-card.reveal.d9,
+.projects-grid .project-card.reveal.d10 {
+  transition-delay: 0s !important;
+}
+
+/* Orbs: much cheaper while still visible */
+.liquid-orb {
+  filter: blur(60px) !important;
+  will-change: auto !important;
+  animation-duration: 40s !important;
+}
+.liquid-bg.is-scrolling .liquid-orb {
+  animation-play-state: paused !important;
+  opacity: 0.85 !important;
+}
+
+/* Reduce shadow cost on other cards during scroll feel */
+@media (max-width: 1024px) {
+  .skill-card,
+  .exp-card,
+  .edu-card,
+  .cert-card,
+  .facts-card {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+}
+
+
+/* ========== PROJECT DETAIL MODAL ========== */
+.project-detail-btn {
+  margin-top: 0.85rem;
+  width: 100%;
+  justify-content: center;
+  border-radius: 999px !important;
+  font-size: 0.82rem !important;
+  padding: 0.55rem 1rem !important;
+}
+
+.project-modal[hidden] {
+  display: none !important;
+}
+.project-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.project-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 16, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.project-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 100%);
+  max-height: min(86vh, 720px);
+  overflow: auto;
+  border-radius: 1.25rem;
+  padding: 1.35rem 1.35rem 1.2rem;
+  background: rgba(12, 18, 32, 0.92) !important;
+  border: 1px solid rgba(34, 211, 238, 0.22) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5) !important;
+}
+[data-theme="light"] .project-modal-dialog {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(8, 145, 178, 0.2) !important;
+}
+.project-modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.85rem;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.project-modal-close:hover {
+  background: rgba(34, 211, 238, 0.15);
+  color: var(--accent);
+}
+.project-modal-header {
+  padding-right: 2rem;
+  margin-bottom: 0.85rem;
+}
+.project-modal-header h3 {
+  margin: 0.55rem 0 0;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+.project-modal-body .project-desc {
+  margin-bottom: 1rem;
+}
+.modal-subtitle {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin: 0.9rem 0 0.45rem;
+  font-weight: 600;
+}
+.modal-highlights {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.modal-highlights li {
+  list-style: disc;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.project-modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+.project-modal-footer .btn {
+  border-radius: 999px !important;
+}
+
+.project-modal.project-modal-open {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+
+/* Modal hard override */
+#projectModal.project-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+}
+#projectModal .project-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 16, 0.75);
+}
+#projectModal .project-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 100%);
+  max-height: min(86vh, 720px);
+  overflow: auto;
+  border-radius: 1.25rem;
+  padding: 1.35rem;
+  background: #0f172a;
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+  color: #e2e8f0;
+}
+[data-theme="light"] #projectModal .project-modal-dialog {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(8, 145, 178, 0.25);
+}
+
+
+/* Modal scrollbar — thin / hidden */
+#projectModal .project-modal-dialog {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 211, 238, 0.35) transparent;
+  -ms-overflow-style: none;
+}
+#projectModal .project-modal-dialog::-webkit-scrollbar {
+  width: 6px;
+}
+#projectModal .project-modal-dialog::-webkit-scrollbar-track {
+  background: transparent;
+}
+#projectModal .project-modal-dialog::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.35);
+  border-radius: 999px;
+}
+#projectModal .project-modal-dialog::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.55);
+}
+
+/* Hide page scrollbar while modal open is handled by body overflow hidden */
+.project-modal-close {
+  cursor: pointer;
+  z-index: 2;
+}
+#modalCloseBtn2 {
+  cursor: pointer;
+}
+
+
+/* ========== Modal liquid glass + global smooth scroll ========== */
+#projectModal {
+  background: transparent !important;
+}
+#projectModal .project-modal-backdrop {
+  background: rgba(2, 6, 16, 0.55) !important;
+  backdrop-filter: blur(10px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(140%) !important;
+}
+[data-theme="light"] #projectModal .project-modal-backdrop {
+  background: rgba(15, 23, 42, 0.28) !important;
+}
+
+#projectModal .project-modal-dialog {
+  background: rgba(12, 18, 34, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(34, 211, 238, 0.22) !important;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15) !important;
+  position: relative;
+  overflow-x: hidden;
+}
+#projectModal .project-modal-dialog::before {
+  content: '';
+  position: absolute;
+  inset-inline: 12%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+[data-theme="light"] #projectModal .project-modal-dialog {
+  background: rgba(255, 255, 255, 0.62) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+  border: 1px solid rgba(8, 145, 178, 0.2) !important;
+  box-shadow:
+    0 24px 56px rgba(15, 23, 42, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Global smoothness */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  -webkit-overflow-scrolling: touch;
+  text-rendering: optimizeSpeed;
+}
+
+/* Lighter orbs always — big lag source */
+.liquid-orb {
+  filter: blur(55px) !important;
+  will-change: auto !important;
+  animation-duration: 45s !important;
+  opacity: 0.85 !important;
+}
+.liquid-bg.is-scrolling .liquid-orb,
+body.is-scrolling .liquid-orb {
+  animation-play-state: paused !important;
+}
+
+/* Reduce blur on non-critical surfaces for smoother scroll */
+.skill-card,
+.exp-card,
+.edu-card,
+.facts-card,
+.cert-card,
+.contact-inner {
+  backdrop-filter: blur(12px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+}
+
+.navbar .nav-inner {
+  backdrop-filter: blur(16px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
+}
+
+/* No transform hover jank on cards */
+.project-card:hover,
+.skill-card:hover,
+.exp-card:hover,
+.edu-card:hover {
+  transform: none !important;
+}
+
+/* Prefer compositing only opacity/transform where needed */
+.reveal {
+  will-change: auto !important;
+  transition: opacity 0.3s ease !important;
+}
+.reveal:not(.visible) {
+  opacity: 0.01;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none !important;
+  filter: none !important;
+}
+
+@media (max-width: 768px) {
+  .liquid-orb {
+    filter: blur(45px) !important;
+    animation: none !important;
+  }
+  .skill-card,
+  .exp-card,
+  .edu-card,
+  .cert-card,
+  .contact-inner,
+  .glass {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+  /* Modal glass slightly lighter on mobile for perf */
+  #projectModal .project-modal-dialog {
+    backdrop-filter: blur(16px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+  }
+  #projectModal .project-modal-backdrop {
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+  }
 }
