@@ -4037,3 +4037,102 @@ body.is-scrolling .liquid-orb {
     border-radius: 0.75rem !important;
   }
 }
+
+
+/* ========== Mobile project cards: equal height & alignment ========== */
+.projects-grid {
+  align-items: stretch !important;
+}
+
+.project-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+.project-banner {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-shrink: 0;
+}
+
+.project-body {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+}
+
+.project-desc {
+  flex: 1 1 auto;
+}
+
+.project-tech {
+  margin-top: auto;
+}
+
+.project-detail-btn {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0 !important;
+  flex-shrink: 0;
+}
+
+@media (max-width: 699px) {
+  /* Equal structure so short cards stretch to match tall ones in the row */
+  .project-card {
+    height: 100% !important;
+    min-height: 100%;
+  }
+
+  .project-banner {
+    min-height: 5.75rem !important;
+    padding: 0.85rem 0.75rem 0.7rem !important;
+  }
+
+  .project-banner h3 {
+    min-height: 2.6em !important; /* room for ~2 title lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .project-badges {
+    margin-top: auto;
+    min-height: 1.4rem;
+  }
+
+  .project-body {
+    min-height: 9.5rem !important;
+    flex: 1 1 auto !important;
+  }
+
+  .project-desc {
+    min-height: 3.9em !important; /* ~3 lines */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    flex: 1 1 auto;
+  }
+
+  .project-tech {
+    min-height: 2.8rem !important; /* ~2 chip rows */
+    align-content: flex-start;
+    margin-top: auto !important;
+  }
+
+  .project-detail-btn {
+    width: 100%;
+    margin-top: 0.45rem !important;
+  }
+}
+
+/* Small phones still 2-col balanced */
+@media (max-width: 380px) {
+  .project-banner h3 {
+    font-size: 0.78rem !important;
+  }
+  .project-desc {
+    font-size: 0.68rem !important;
+  }
+}
