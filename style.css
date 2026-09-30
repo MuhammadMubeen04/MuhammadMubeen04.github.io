@@ -4136,3 +4136,29 @@ body.is-scrolling .liquid-orb {
     font-size: 0.68rem !important;
   }
 }
+
+
+/* Certificates grid: 2 cards */
+.certs-grid {
+  display: grid;
+  gap: 1.35rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .certs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* Certificates: stack vertically — DecodeLabs below Big Brains */
+.certs-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important;
+  grid-template-columns: none !important;
+}
+.certs-grid .cert-card {
+  width: 100% !important;
+  max-width: 100% !important;
+}
