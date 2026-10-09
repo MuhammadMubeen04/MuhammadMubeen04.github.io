@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-tier="mid">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mubeen Salman | Data Analyst &amp; Machine Learning Portfolio</title>
+  <meta name="description" content="Portfolio of Mubeen Salman — Data Analyst and BS Information Technology student at UMT Lahore. Python, SQL, Power BI, Machine Learning, RAG and full-stack development." />
+  <meta name="author" content="Mubeen Salman" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#070b14" />
+
+  <!-- Applies saved theme + performance tier before first paint (no flash, no layout jump) -->
+  <script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      var ls = window.localStorage, n = navigator, c = n.connection || {};
+      var th = ls.getItem('portfolio-theme');
+      if (th !== 'light' && th !== 'dark') th = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      d.setAttribute('data-theme', th);
+      var order = ['low', 'mid', 'high'], tier = 'high';
+      if (matchMedia('(pointer: coarse)').matches || (n.deviceMemory && n.deviceMemory <= 4) || (n.hardwareConcurrency && n.hardwareConcurrency <= 4)) tier = 'mid';
+      if ((n.deviceMemory && n.deviceMemory <= 2) || (n.hardwareConcurrency && n.hardwareConcurrency <= 2) || c.saveData || /2g|3g/.test(c.effectiveType || '')) tier = 'low';
+      window.__tierBase = tier;
+      var saved = ls.getItem('portfolio-tier');
+      if (Date.now() - (+ls.getItem('portfolio-tier-ts') || 0) > 12096e5) saved = null;
+      if (saved && order.indexOf(saved) > -1 && order.indexOf(saved) < order.indexOf(tier)) tier = saved;
+      var q = new URLSearchParams(location.search).get('tier');
+      if (q && order.indexOf(q) > -1) tier = q;
+      d.setAttribute('data-tier', tier);
+    } catch (e) { d.setAttribute('data-theme', 'dark'); d.setAttribute('data-tier', 'mid'); }
+    d.classList.add('js');
+  })();
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <!-- After deploying, replace og-image.png / add <link rel="canonical"> and og:url with your full https:// address -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mubeen Salman | Data Analyst &amp; Machine Learning Portfolio" />
+  <meta property="og:description" content="Data analytics dashboards, ML models and RAG systems — Python, SQL, Power BI and full-stack development." />
+  <meta property="og:image" content="og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Mubeen Salman | Data Analyst &amp; Machine Learning Portfolio" />
+  <meta name="twitter:description" content="Data analytics dashboards, ML models and RAG systems — Python, SQL, Power BI and full-stack development." />
+  <meta name="twitter:image" content="og-image.png" />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Mubeen Salman","jobTitle":"Data Analyst","description":"Data Analyst and BS Information Technology student specializing in data analytics, machine learning and full-stack development.","email":"mailto:mubeen.salman788@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Lahore","addressCountry":"PK"},"alumniOf":{"@type":"CollegeOrUniversity","name":"University of Management and Technology"},"knowsAbout":["Data Analytics","Machine Learning","Python","SQL","Power BI","Retrieval-Augmented Generation","Full-Stack Development"],"sameAs":["https://github.com/MuhammadMubeen04","https://linkedin.com/in/mubeen-salman-459776364","https://fiverr.com/s/0b7Womq"]}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Non-blocking font load: text renders immediately in a system font, then swaps to Inter -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" /></noscript>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></symbol>
+  <symbol id="i-zoom" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><path d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></symbol>
+  <symbol id="i-cog" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></symbol>
+</svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="liquid-bg" aria-hidden="true">
+    <i class="orb orb-1"></i><i class="orb orb-2"></i><i class="orb orb-3"></i><i class="orb orb-4"></i>
+  </div>
+  <div class="scroll-progress" id="progress" aria-hidden="true"></div>
+
+  <header id="navbar" class="navbar">
+    <div class="nav-shell">
+      <nav class="nav-inner glass glass-float" aria-label="Primary">
+        <a href="#home" class="logo" aria-label="Mubeen Salman — home">
+          <img class="logo-mark" src="favicon.svg" width="30" height="30" alt="" />
+          <span class="logo-name">Mubeen Salman</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#certificates" class="nav-link">Certificates</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-right">
+          <button id="themeToggle" class="icon-btn theme-toggle" type="button" aria-label="Switch between light and dark theme">
+            <svg class="icon icon-moon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+            <svg class="icon icon-sun" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+          </button>
+          <a href="#contact" class="btn btn-primary nav-cta">Get in touch</a>
+          <button id="menuBtn" class="icon-btn menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg>
+          </button>
+        </div>
+      </nav>
+      <div id="mobileMenu" class="mobile-menu glass glass-float">
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#skills" class="mobile-link">Skills</a>
+        <a href="#projects" class="mobile-link">Projects</a>
+        <a href="#experience" class="mobile-link">Experience</a>
+        <a href="#education" class="mobile-link">Education</a>
+        <a href="#certificates" class="mobile-link">Certificates</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="home" class="hero" aria-label="Introduction">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="status rise" style="--i:0"><span class="status-dot" aria-hidden="true"></span>Open to full-time &amp; internship roles</p>
+          <h1 class="hero-title rise" style="--i:1"><span class="gradient-text">Mubeen <br />Salman</span></h1>
+          <p class="hero-subtitle rise" style="--i:2">Data Analyst · BS Information Technology Student</p>
+          <p class="hero-desc rise" style="--i:3">Data Analyst with a focus on turning raw datasets into clear business insights through Python, SQL, and Pandas. Builds dashboards and visualizations in Power BI and Matplotlib to communicate findings, and supports data cleaning, transformation, and reporting workflows. Applies analytical thinking to real-world datasets while strengthening practical machine learning skills.</p>
+          <div class="hero-actions rise" style="--i:4">
+            <a href="#projects" class="btn btn-primary">View projects <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-chevron-down"/></svg></a>
+            <a href="Mubeen-Salman-Resume.pdf" download="Mubeen-Salman-Resume.pdf" class="btn btn-outline"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-download"/></svg> Download resume</a>
+          </div>
+          <div class="hero-socials rise" style="--i:5">
+            <a href="https://github.com/MuhammadMubeen04" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            <a href="https://linkedin.com/in/mubeen-salman-459776364" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg></a>
+            <a href="https://fiverr.com/s/0b7Womq" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Fiverr">Fiverr</a>
+            <a href="mailto:mubeen.salman788@gmail.com" class="social-link" aria-label="Email"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg></a>
+          </div>
+        </div>
+
+        <aside class="hero-card glass glass-float rise" data-spot data-tilt aria-labelledby="hcTitle">
+          <div class="hc-head">
+            <p class="hc-title" id="hcTitle">What my projects run on</p>
+            <p class="hc-meta">18 projects · 12 on GitHub</p>
+          </div>
+          <ul class="hc-bars" id="heroBars">
+            <li><button type="button" class="hc-row" data-tool="Python" style="--i:0" aria-label="Python: used in 14 projects. Filter projects by Python"><span class="hc-name">Python</span><span class="hc-track" aria-hidden="true"><span class="hc-fill" style="--v:1.000"></span></span><span class="hc-n">14</span></button></li>
+            <li><button type="button" class="hc-row" data-tool="Pandas" style="--i:1" aria-label="Pandas: used in 12 projects. Filter projects by Pandas"><span class="hc-name">Pandas</span><span class="hc-track" aria-hidden="true"><span class="hc-fill" style="--v:0.857"></span></span><span class="hc-n">12</span></button></li>
+            <li><button type="button" class="hc-row" data-tool="SQL" style="--i:2" aria-label="SQL: used in 9 projects. Filter projects by SQL"><span class="hc-name">SQL</span><span class="hc-track" aria-hidden="true"><span class="hc-fill" style="--v:0.643"></span></span><span class="hc-n">9</span></button></li>
+            <li><button type="button" class="hc-row" data-tool="Power BI" style="--i:3" aria-label="Power BI: used in 8 projects. Filter projects by Power BI"><span class="hc-name">Power BI</span><span class="hc-track" aria-hidden="true"><span class="hc-fill" style="--v:0.571"></span></span><span class="hc-n">8</span></button></li>
+            <li><button type="button" class="hc-row" data-tool="Seaborn" style="--i:4" aria-label="Seaborn: used in 8 projects. Filter projects by Seaborn"><span class="hc-name">Seaborn</span><span class="hc-track" aria-hidden="true"><span class="hc-fill" style="--v:0.571"></span></span><span class="hc-n">8</span></button></li>
+            <li><button type="button" class="hc-row" data-tool="Matplotlib" style="--i:5" aria-label="Matplotlib: used in 5 projects. Filter projects by Matplotlib"><span class="hc-name">Matplotlib</span><span class="hc-track" aria-hidden="true"><span class="hc-fill" style="--v:0.357"></span></span><span class="hc-n">5</span></button></li>
+          </ul>
+          <p class="hc-foot">Tool counts come straight from the project list below. Tap a tool to filter it.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="wrap">
+        <div class="section-header" data-reveal>
+          <h2 class="section-title">About me</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="about-grid">
+          <div class="about-text" data-reveal>
+            <p>I am a BS Information Technology student (6th semester) at the University of Management and Technology (UMT), Lahore, specializing in <strong>Data Analytics</strong>, <strong>Machine Learning</strong>, and <strong>Full-Stack Development</strong>.</p>
+            <p>I work extensively with Python, SQL, Scikit-learn, Pandas, and modern AI/LLM technologies (RAG, API Integration, Computer Vision) to build practical, data-driven applications and machine learning workflows. My practical coursework and project background also span Cloud Computing, Web Technologies (Django, Laravel, Node.js), and Network Security.</p>
+            <p>I am actively building hands-on projects, expanding my open-source work on GitHub, and seeking internship or entry-level opportunities in Data Analytics, Machine Learning, and Software Development.</p>
+            <div class="about-meta">
+              <span class="meta-item"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-pin"/></svg> Lahore, Pakistan</span>
+              <span class="meta-item"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-cap"/></svg> UMT Lahore · 6th semester · CGPA 3.02</span>
+            </div>
+          </div>
+          <div class="facts-card glass" data-spot data-reveal style="--i:1">
+            <h3 class="facts-title">Quick facts</h3>
+            <ul class="facts-list">
+              <li>Currently building Data Analytics &amp; Machine Learning projects</li>
+              <li>Hands-on with RAG, LLM integrations, Scikit-learn &amp; OpenCV</li>
+              <li>Experienced in Full-Stack Web Dev (Django, Laravel, Node.js)</li>
+              <li>Built Active Directory, Cisco Routing &amp; Database projects in academic labs</li>
+              <li>Generative AI Intern at Arch Technologies · Data Analytics Intern at Decode Labs · Certificates: Big Brains (AI/ML) &amp; DecodeLabs (Data Analytics)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="wrap">
+        <div class="section-header" data-reveal>
+          <h2 class="section-title">Skills</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-card glass lift" data-spot data-reveal style="--i:0">
+            <div class="skill-card-header"><div class="skill-icon cyan"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-bulb"/></svg></div><h3>AI &amp; Data Science</h3></div>
+            <div class="chips"><span class="chip">Python</span><span class="chip">Scikit-learn</span><span class="chip">LLM APIs</span><span class="chip">OpenCV</span><span class="chip">TensorFlow</span><span class="chip">NLP</span><span class="chip">ARIMA</span><span class="chip">Pandas</span><span class="chip">Matplotlib</span><span class="chip">Streamlit</span><span class="chip">Power BI</span></div>
+          </div>
+          <div class="skill-card glass lift" data-spot data-reveal style="--i:1">
+            <div class="skill-card-header"><div class="skill-icon violet"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-code"/></svg></div><h3>Software &amp; Web Dev</h3></div>
+            <div class="chips"><span class="chip">Django</span><span class="chip">Laravel</span><span class="chip">Node.js</span><span class="chip">C++</span><span class="chip">PHP</span><span class="chip">JavaScript</span><span class="chip">HTML5 / CSS3</span><span class="chip">Bootstrap</span><span class="chip">Tailwind CSS</span><span class="chip">SQL / MySQL</span><span class="chip">MS SQL Server</span><span class="chip">SQLite</span></div>
+          </div>
+          <div class="skill-card glass lift" data-spot data-reveal style="--i:2">
+            <div class="skill-card-header"><div class="skill-icon emerald"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-server"/></svg></div><h3>Networking &amp; Cloud</h3></div>
+            <div class="chips"><span class="chip">Cisco Packet Tracer</span><span class="chip">Cloud Computing</span><span class="chip">Active Directory</span><span class="chip">GPO</span><span class="chip">Windows Server</span><span class="chip">Network Security</span><span class="chip">DHCP</span><span class="chip">Static NAT</span></div>
+          </div>
+          <div class="skill-card glass lift" data-spot data-reveal style="--i:3">
+            <div class="skill-card-header"><div class="skill-icon pink"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-cog"/></svg></div><h3>Tools &amp; Platforms</h3></div>
+            <div class="chips"><span class="chip">Git / GitHub</span><span class="chip">VS Code</span><span class="chip">Ollama</span><span class="chip">Groq Cloud</span><span class="chip">n8n Automation</span><span class="chip">PyInstaller</span><span class="chip">Figma</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="wrap">
+        <div class="section-header" data-reveal>
+          <h2 class="section-title">Projects</h2>
+          <div class="section-line"></div>
+        </div>
+        <p class="section-intro" data-reveal>Selected projects spanning data analytics, machine learning, RAG systems, networking, and full-stack development — ordered by impact and technical depth.</p>
+
+        <div class="projects-toolbar" data-reveal>
+          <div class="filters" role="group" aria-label="Filter projects by focus">
+          <button type="button" class="filter" data-filter="all" aria-pressed="true">All <b>18</b></button>
+          <button type="button" class="filter" data-filter="analytics" aria-pressed="false">Analytics &amp; BI <b>11</b></button>
+          <button type="button" class="filter" data-filter="ml" aria-pressed="false">AI &amp; ML <b>5</b></button>
+          <button type="button" class="filter" data-filter="web" aria-pressed="false">Web &amp; systems <b>4</b></button>
+          </div>
+          <div class="projects-status" aria-live="polite">
+            <span id="projectsCount"></span>
+            <span class="tool-pill" id="toolPill" hidden><span id="toolPillLabel"></span><button type="button" id="toolPillClear" aria-label="Clear tool filter">&times;</button></span>
+          </div>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+        <article class="project-card lift" data-project="0" data-groups="ml" data-tools="Python|Streamlit|ChromaDB|sentence-transformers|BM25|Groq API" data-reveal style="--i:0">
+          <div class="project-banner">
+            <h3>RAG Copilot – Hybrid Search &amp; Reranking</h3>
+            <div class="project-badges"><span class="badge">AI &amp; RAG</span><span class="badge badge-soft">AI/ML</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">End-to-end Retrieval-Augmented Generation system that answers questions from PDF documents using hybrid search and reranking, with source citations.</p>
+            <div class="project-tech"><span class="chip">Python</span><span class="chip">Streamlit</span><span class="chip">ChromaDB</span><span class="chip">sentence-transformers</span><span class="chip">BM25</span><span class="chip">Groq API</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="0">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/RAG-Copilot" target="_blank" rel="noopener noreferrer" aria-label="RAG Copilot – Hybrid Search &amp; Reranking on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="1" data-groups="analytics ml" data-tools="SQL|Python|Scikit-learn|Pandas|Power BI" data-reveal style="--i:1">
+          <div class="project-banner">
+            <h3>Customer Churn Analysis &amp; Prediction</h3>
+            <div class="project-badges"><span class="badge">ML &amp; Analytics</span><span class="badge badge-soft">Analytics</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Customer churn project combining business analytics with Machine Learning. Analyzed 3,500 customer records to identify churn drivers and built classification models to predict attrition.</p>
+            <div class="project-tech"><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Scikit-learn</span><span class="chip">Pandas</span><span class="chip">Power BI</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="1">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/Customer-Churn-Analysis-Prediction" target="_blank" rel="noopener noreferrer" aria-label="Customer Churn Analysis &amp; Prediction on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="2" data-groups="analytics" data-tools="SQL|Python|Pandas|Matplotlib|Seaborn|Power BI" data-reveal style="--i:2">
+          <div class="project-banner">
+            <h3>Sales Performance &amp; Executive Dashboard</h3>
+            <div class="project-badges"><span class="badge">Data Analytics</span><span class="badge badge-soft">Analytics</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">End-to-end sales analytics on 5,000 transactions tracking revenue, profit, regional performance, product trends, and sales team effectiveness.</p>
+            <div class="project-tech"><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Matplotlib</span><span class="chip">Seaborn</span><span class="chip">Power BI</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="2">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/Sales-Performance-Executive-Dashboard" target="_blank" rel="noopener noreferrer" aria-label="Sales Performance &amp; Executive Dashboard on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="3" data-groups="analytics" data-tools="SQL|Python|Pandas|Seaborn|Power BI" data-reveal style="--i:0">
+          <div class="project-banner">
+            <h3>E-Commerce Business Analytics</h3>
+            <div class="project-badges"><span class="badge">Data Analytics</span><span class="badge badge-soft">Analytics</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">E-commerce analytics on 5,500 orders evaluating revenue, profit, product performance, discount impact, return rates, ratings, and regional performance.</p>
+            <div class="project-tech"><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Seaborn</span><span class="chip">Power BI</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="3">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/ECommerce-Business-Analytics" target="_blank" rel="noopener noreferrer" aria-label="E-Commerce Business Analytics on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="4" data-groups="analytics" data-tools="SQL|Python|Pandas|Seaborn|Power BI" data-reveal style="--i:1">
+          <div class="project-banner">
+            <h3>Financial Performance Dashboard</h3>
+            <div class="project-badges"><span class="badge">Data Analytics</span><span class="badge badge-soft">Finance</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Financial analytics for revenue, expenses, profit, margins, and budget vs actual (2022-2025) with an executive Power BI reporting pipeline.</p>
+            <div class="project-tech"><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Seaborn</span><span class="chip">Power BI</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="4">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/Financial-Performance-Dashboard" target="_blank" rel="noopener noreferrer" aria-label="Financial Performance Dashboard on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="5" data-groups="analytics" data-tools="SQL|Python|Pandas|Seaborn|Power BI" data-reveal style="--i:2">
+          <div class="project-banner">
+            <h3>Supply Chain &amp; Inventory Analytics</h3>
+            <div class="project-badges"><span class="badge">Data Analytics</span><span class="badge badge-soft">Operations</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Inventory health, stock-outs, warehouse performance, and supplier reliability across 120 SKUs and multi-city warehouses (Riyadh, Jeddah, Dammam).</p>
+            <div class="project-tech"><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Seaborn</span><span class="chip">Power BI</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="5">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/Supply-Chain-Inventory-Analytics" target="_blank" rel="noopener noreferrer" aria-label="Supply Chain &amp; Inventory Analytics on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="6" data-groups="analytics" data-tools="SQL|Python|Pandas|Seaborn|Power BI" data-reveal style="--i:0">
+          <div class="project-banner">
+            <h3>Tourism &amp; Visitor Traffic Analytics</h3>
+            <div class="project-badges"><span class="badge">Data Analytics</span><span class="badge badge-soft">Analytics</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Multi-year visitor traffic across major destinations covering seasonality, occupancy, trip purpose, and origin markets for planning decisions.</p>
+            <div class="project-tech"><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Seaborn</span><span class="chip">Power BI</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="6">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/Tourism-Visitor-Traffic-Analytics" target="_blank" rel="noopener noreferrer" aria-label="Tourism &amp; Visitor Traffic Analytics on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="7" data-groups="analytics ml" data-tools="SQL|Python|Scikit-learn|Pandas|Power BI" data-reveal style="--i:1">
+          <div class="project-banner">
+            <h3>Customer Analytics &amp; Segmentation</h3>
+            <div class="project-badges"><span class="badge">ML &amp; Analytics</span><span class="badge badge-soft">Analytics</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">RFM analysis and K-Means clustering on 800 customers into actionable groups: High-Value Champions, Loyal Frequent, Potential, and At-Risk.</p>
+            <div class="project-tech"><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Scikit-learn</span><span class="chip">Pandas</span><span class="chip">Power BI</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="7">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/Customer-Analytics-Segmentation" target="_blank" rel="noopener noreferrer" aria-label="Customer Analytics &amp; Segmentation on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="8" data-groups="analytics" data-tools="SQL|Python|Pandas|Seaborn|Power BI" data-reveal style="--i:2">
+          <div class="project-banner">
+            <h3>HR Analytics &amp; Employee Attrition Dashboard</h3>
+            <div class="project-badges"><span class="badge">Data Analytics</span><span class="badge badge-soft">HR</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Analyzed 1,200 employee records for attrition drivers including overtime, satisfaction, tenure, and department with HR recommendations.</p>
+            <div class="project-tech"><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Seaborn</span><span class="chip">Power BI</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="8">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/HR-Analytics-Employee-Attrition" target="_blank" rel="noopener noreferrer" aria-label="HR Analytics &amp; Employee Attrition Dashboard on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="9" data-groups="analytics" data-tools="MySQL|SQL|Python|Pandas|Matplotlib" data-reveal style="--i:0">
+          <div class="project-banner">
+            <h3>Retail SQL Business Case Study</h3>
+            <div class="project-badges"><span class="badge">SQL Analytics</span><span class="badge badge-soft">SQL</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">SQL-focused retail case study on a multi-store database. Solved 35 business questions using JOINs, CTEs, window functions, and advanced SQL.</p>
+            <div class="project-tech"><span class="chip">MySQL</span><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Matplotlib</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="9">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/Retail-SQL-Business-Case-Study" target="_blank" rel="noopener noreferrer" aria-label="Retail SQL Business Case Study on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="10" data-groups="analytics" data-tools="Python|Pandas|NumPy|Matplotlib|Seaborn" data-reveal style="--i:1">
+          <div class="project-banner">
+            <h3>Gaming Sales &amp; Player Behavior Analytics</h3>
+            <div class="project-badges"><span class="badge">Data Analytics</span><span class="badge badge-soft">Analytics</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Analyzed 1,200 games (2012-2025) for sales trends, score patterns, platforms, genres, and top-performing titles and publishers.</p>
+            <div class="project-tech"><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Matplotlib</span><span class="chip">Seaborn</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="10">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/Gaming-Sales-Player-Behavior-Analytics" target="_blank" rel="noopener noreferrer" aria-label="Gaming Sales &amp; Player Behavior Analytics on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="11" data-groups="analytics" data-tools="Python|Pandas|NumPy|Matplotlib|Seaborn" data-reveal style="--i:2">
+          <div class="project-banner">
+            <h3>Gym Membership &amp; Fitness Analytics</h3>
+            <div class="project-badges"><span class="badge">Data Analytics</span><span class="badge badge-soft">Analytics</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Membership analytics on 800 members and 12,800+ check-ins covering attendance, class popularity, peak hours, and retention.</p>
+            <div class="project-tech"><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Matplotlib</span><span class="chip">Seaborn</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="11">View details</button>
+              <a class="icon-btn" href="https://github.com/MuhammadMubeen04/Gym-Membership-Fitness-Analytics" target="_blank" rel="noopener noreferrer" aria-label="Gym Membership &amp; Fitness Analytics on GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="12" data-groups="ml" data-tools="Python|Streamlit|LLM APIs|Ollama|Git" data-reveal style="--i:0">
+          <div class="project-banner">
+            <h3>Multi-Model LLM &amp; RAG Assistant Application</h3>
+            <div class="project-badges"><span class="badge">AI &amp; Web</span><span class="badge badge-soft">AI/ML</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Interactive AI web app integrating multi-LLM APIs for real-time document analysis and NLP tasks with a Streamlit interface.</p>
+            <div class="project-tech"><span class="chip">Python</span><span class="chip">Streamlit</span><span class="chip">LLM APIs</span><span class="chip">Ollama</span><span class="chip">Git</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="12">View details</button>
+              
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="13" data-groups="ml" data-tools="Python|Scikit-learn|Pandas|Matplotlib" data-reveal style="--i:1">
+          <div class="project-banner">
+            <h3>AI-Driven Predictive Sales &amp; Customer Analytics</h3>
+            <div class="project-badges"><span class="badge">Machine Learning</span><span class="badge badge-soft">AI/ML</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Machine learning workflow using Scikit-learn to forecast customer behavior and sales trends with preprocessing and evaluation.</p>
+            <div class="project-tech"><span class="chip">Python</span><span class="chip">Scikit-learn</span><span class="chip">Pandas</span><span class="chip">Matplotlib</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="13">View details</button>
+              
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="14" data-groups="web" data-tools="Packet Tracer|Windows Server|AD DS|GPO" data-reveal style="--i:2">
+          <div class="project-banner">
+            <h3>Enterprise Network &amp; Security Infrastructure</h3>
+            <div class="project-badges"><span class="badge">Networking</span><span class="badge badge-soft">Security</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Simulated multi-site corporate network with routing, Active Directory, DHCP, GPO, Static NAT, and role-based access control.</p>
+            <div class="project-tech"><span class="chip">Packet Tracer</span><span class="chip">Windows Server</span><span class="chip">AD DS</span><span class="chip">GPO</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="14">View details</button>
+              
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="15" data-groups="web" data-tools="PHP|MySQL|JavaScript|Tailwind" data-reveal style="--i:0">
+          <div class="project-banner">
+            <h3>Secure Relational Banking &amp; Transaction System</h3>
+            <div class="project-badges"><span class="badge">Full-Stack</span><span class="badge badge-soft">Web</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Database-backed banking application with secure authentication, real-time transactions, and automated ledger reporting.</p>
+            <div class="project-tech"><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">JavaScript</span><span class="chip">Tailwind</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="15">View details</button>
+              
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="16" data-groups="web" data-tools="PHP|MySQL|JavaScript|Bootstrap" data-reveal style="--i:1">
+          <div class="project-banner">
+            <h3>NextGen Gaming Content Showcase Platform</h3>
+            <div class="project-badges"><span class="badge">Web Dev</span><span class="badge badge-soft">Web</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Responsive dynamic web platform with database-driven content management, catalog filtering, and modern UI/UX design.</p>
+            <div class="project-tech"><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">JavaScript</span><span class="chip">Bootstrap</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="16">View details</button>
+              
+            </div>
+          </div>
+        </article>
+        <article class="project-card lift" data-project="17" data-groups="web" data-tools="PHP|JavaScript|MySQL|HTML/CSS" data-reveal style="--i:2">
+          <div class="project-banner">
+            <h3>Interactive Web-Based Assessment &amp; Quiz System</h3>
+            <div class="project-badges"><span class="badge">Web Dev</span><span class="badge badge-soft">Web</span></div>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">Online assessment portal with dynamic question generation, real-time scoring, and automated user result tracking.</p>
+            <div class="project-tech"><span class="chip">PHP</span><span class="chip">JavaScript</span><span class="chip">MySQL</span><span class="chip">HTML/CSS</span></div>
+            <div class="project-actions">
+              <button type="button" class="btn btn-outline project-detail-btn" data-project="17">View details</button>
+              
+            </div>
+          </div>
+        </article>
+        </div>
+        <p class="empty" id="projectsEmpty" hidden>No projects match this combination. <button type="button" class="filter" id="resetFilters">Reset filters</button></p>
+        <div class="projects-more">
+          <button type="button" class="btn btn-outline" id="showMore" hidden>Show more projects</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section">
+      <div class="wrap">
+        <div class="section-header" data-reveal>
+          <h2 class="section-title">Experience</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-items">
+            <div class="timeline-item" data-reveal data-start="2026-10" data-end="2026-11">
+              <div class="timeline-dot"></div>
+              <div class="exp-card glass" data-spot>
+                <div class="exp-header-row">
+                  <div class="exp-logo" aria-hidden="true"><img src="images/arch-technologies.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" /></div>
+                  <div class="exp-body">
+                    <div class="exp-header"><h3>Generative AI Intern</h3><span class="exp-date">Oct 2026 – Nov 2026 · 2 mos</span></div>
+                    <p class="exp-company">Arch Technologies · Internship · Remote · Lahore, Pakistan</p>
+                    <ul class="exp-bullets">
+                      <li>Build and deploy custom Generative AI models, prompt templates, and automated workflow integrations.</li>
+                      <li>Implement advanced prompt architecture, fine-tuning techniques, and generative tools for data tasks.</li>
+                      <li>Collaborate on remote technical projects focusing on scalable end-to-end AI deployment and execution.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item" data-reveal style="--i:1" data-start="2026-08" data-end="2026-09">
+              <div class="timeline-dot"></div>
+              <div class="exp-card glass" data-spot>
+                <div class="exp-header-row">
+                  <div class="exp-logo" aria-hidden="true"><img src="images/big-brains.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" /></div>
+                  <div class="exp-body">
+                    <div class="exp-header"><h3>Artificial Intelligence Intern</h3><span class="exp-date">Aug 2026 – Sep 2026 · 2 mos</span></div>
+                    <p class="exp-company">Big Brains · Remote Internship · Lahore, Pakistan</p>
+                    <ul class="exp-bullets">
+                      <li>Build and evaluate machine learning classification and predictive models using Python, Pandas, Scikit-learn.</li>
+                      <li>Execute data preprocessing, feature engineering, and hyperparameter tuning to boost predictive accuracy.</li>
+                      <li>Explore practical Generative AI applications and integrate AI models into structured software workflows.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item" data-reveal style="--i:2" data-start="2026-08" data-end="2026-09">
+              <div class="timeline-dot"></div>
+              <div class="exp-card glass" data-spot>
+                <div class="exp-header-row">
+                  <div class="exp-logo" aria-hidden="true"><img src="images/decodelabs.jpg" alt="" width="44" height="44" loading="lazy" decoding="async" /></div>
+                  <div class="exp-body">
+                    <div class="exp-header"><h3>Data Analytics Intern</h3><span class="exp-date">Aug 2026 – Sep 2026 · 1 mo</span></div>
+                    <p class="exp-company">Decode Labs · Remote Internship · Lahore, Pakistan</p>
+                    <ul class="exp-bullets">
+                      <li>Perform data extraction, cleaning, and transformation on real-world datasets using Python, Pandas, and SQL.</li>
+                      <li>Construct interactive dashboards and visualizations with Power BI and Matplotlib to show actionable insights.</li>
+                      <li>Optimize relational database queries (MySQL, MS SQL Server) to support business analytics workflows.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="section">
+      <div class="wrap">
+        <div class="section-header" data-reveal>
+          <h2 class="section-title">Education</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="edu-list">
+          <div class="edu-card glass" data-spot data-reveal>
+            <div class="edu-card-top">
+              <div><h3>Bachelor of Science in Information Technology (BS IT)</h3><p class="edu-school">University of Management and Technology (UMT) · Lahore, Pakistan</p></div>
+              <span class="edu-date">Oct 2023 – Oct 2027</span>
+            </div>
+            <p class="edu-meta">CGPA: 3.02 / 4.00</p>
+            <p class="edu-coursework"><strong>Relevant coursework:</strong> Machine Learning, Cloud Computing, Data Structures, Analysis of Algorithms, Database Systems, Network Security</p>
+          </div>
+          <div class="edu-card glass muted" data-spot data-reveal style="--i:1">
+            <div class="edu-card-top">
+              <div><h3>Intermediate in Pre-Engineering (FSc)</h3><p class="edu-school">Punjab Group of Colleges · Lahore, Pakistan</p></div>
+              <span class="edu-date">Sep 2021 – Jun 2023</span>
+            </div>
+          </div>
+          <div class="edu-card glass muted" data-spot data-reveal style="--i:2">
+            <div class="edu-card-top">
+              <div><h3>Matriculation (Science)</h3><p class="edu-school">H.Q School System · Lahore, Pakistan</p></div>
+              <span class="edu-date">Mar 2019 – Aug 2021</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certificates" class="section">
+      <div class="wrap">
+        <div class="section-header" data-reveal>
+          <h2 class="section-title">Certificates</h2>
+          <div class="section-line"></div>
+        </div>
+        <p class="section-intro" data-reveal>Recognitions and program completions from internships and professional training.</p>
+        <div class="certs-grid">
+          <article class="cert-card glass lift" data-spot data-reveal>
+            <a class="cert-preview" href="certificates/big-brains-ai-ml-certificate-full.webp" data-lightbox="certificates/big-brains-ai-ml-certificate-full.webp" data-download="certificates/big-brains-ai-ml-certificate.png" data-download-name="Mubeen-Salman-BigBrains-AI-ML-Certificate.png" data-caption="Big Brains — Artificial Intelligence and Machine Learning" aria-label="View Big Brains certificate full size">
+              <img src="certificates/big-brains-ai-ml-certificate-preview.webp" alt="Big Brains AI and Machine Learning Certificate – Mubeen Salman" width="900" height="636" loading="lazy" decoding="async" />
+            </a>
+            <div class="cert-body">
+              <span class="badge badge-soft">Internship</span>
+              <h3>Artificial Intelligence And Machine Learning</h3>
+              <p class="cert-issuer">Big Brains · Certificate of Completion</p>
+              <ul class="cert-meta">
+                <li><strong>Issued:</strong> September 21, 2026</li>
+                <li><strong>Certificate ID:</strong> BB-2330A12F9560</li>
+                <li><strong>Average score:</strong> 98%</li>
+              </ul>
+              <p class="cert-desc">Awarded for successful completion of the Artificial Intelligence and Machine Learning internship program at Big Brains.</p>
+              <div class="cert-actions">
+                <a href="certificates/big-brains-ai-ml-certificate.png" download="Mubeen-Salman-BigBrains-AI-ML-Certificate.png" class="btn btn-outline"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-download"/></svg> Download certificate</a>
+                <a href="certificates/big-brains-ai-ml-certificate-full.webp" class="btn btn-primary" data-lightbox="certificates/big-brains-ai-ml-certificate-full.webp" data-download="certificates/big-brains-ai-ml-certificate.png" data-download-name="Mubeen-Salman-BigBrains-AI-ML-Certificate.png" data-caption="Big Brains — Artificial Intelligence and Machine Learning">View full size</a>
+              </div>
+            </div>
+          </article>
+          <article class="cert-card glass lift" data-spot data-reveal style="--i:1">
+            <a class="cert-preview" href="certificates/decodelabs-data-analytics-certificate-full.webp" data-lightbox="certificates/decodelabs-data-analytics-certificate-full.webp" data-download="certificates/decodelabs-data-analytics-certificate.jpg" data-download-name="Mubeen-Salman-DecodeLabs-Data-Analytics-Certificate.jpg" data-caption="DecodeLabs — Data Analytics Virtual Internship" aria-label="View DecodeLabs certificate full size">
+              <img src="certificates/decodelabs-data-analytics-certificate-preview.webp" alt="DecodeLabs Data Analytics Internship Certificate – Mubeen Salman" width="900" height="636" loading="lazy" decoding="async" />
+            </a>
+            <div class="cert-body">
+              <span class="badge">Internship</span>
+              <h3>Data Analytics Virtual Internship</h3>
+              <p class="cert-issuer">DecodeLabs · Certificate of Completion</p>
+              <ul class="cert-meta">
+                <li><strong>Issued:</strong> October 01, 2026</li>
+                <li><strong>Student ID:</strong> DA098381</li>
+                <li><strong>Duration:</strong> August 30, 2026 – September 30, 2026</li>
+              </ul>
+              <p class="cert-desc">Awarded for successful completion of the DecodeLabs Virtual Internship Program in Data Analytics, demonstrating dedication, consistency, and hands-on problem-solving across real-world projects.</p>
+              <div class="cert-actions">
+                <a href="certificates/decodelabs-data-analytics-certificate.jpg" download="Mubeen-Salman-DecodeLabs-Data-Analytics-Certificate.jpg" class="btn btn-outline"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-download"/></svg> Download certificate</a>
+                <a href="certificates/decodelabs-data-analytics-certificate-full.webp" class="btn btn-primary" data-lightbox="certificates/decodelabs-data-analytics-certificate-full.webp" data-download="certificates/decodelabs-data-analytics-certificate.jpg" data-download-name="Mubeen-Salman-DecodeLabs-Data-Analytics-Certificate.jpg" data-caption="DecodeLabs — Data Analytics Virtual Internship">View full size</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="wrap">
+        <div class="contact-inner glass glass-float" data-reveal>
+          <div class="contact-info">
+            <h2 class="contact-title">Let&rsquo;s work together</h2>
+            <p class="contact-desc">I am actively seeking internship and entry-level opportunities in Data Analytics, Machine Learning, and Software Development. Whether you have a project idea, a position to discuss, or simply want to connect, my inbox is open.</p>
+            <div class="contact-actions">
+              <a href="mailto:mubeen.salman788@gmail.com" class="btn btn-primary"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg> Email me</a>
+              <button type="button" class="btn btn-outline" id="copyEmail" data-email="mubeen.salman788@gmail.com"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg> Copy email</button>
+              <a href="tel:+923214889391" class="btn btn-outline"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg> +92 321 4889391</a>
+            </div>
+            <p class="contact-location">Lahore, Pakistan</p>
+            <div class="contact-socials">
+              <a href="https://github.com/MuhammadMubeen04" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg></a>
+              <a href="https://linkedin.com/in/mubeen-salman-459776364" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg></a>
+              <a href="https://fiverr.com/s/0b7Womq" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Fiverr">Fiverr</a>
+            </div>
+          </div>
+          <!-- To receive messages without an email app, set data-endpoint to a Formspree / Web3Forms URL -->
+          <form id="contactForm" class="form" data-endpoint="" data-to="mubeen.salman788@gmail.com" aria-label="Send me a message">
+            <div class="field-row">
+              <div class="field"><label for="cf-name">Name</label><input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="80" placeholder="Your name" /></div>
+              <div class="field"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="120" placeholder="you@company.com" /></div>
+            </div>
+            <div class="field"><label for="cf-msg">Message</label><textarea id="cf-msg" name="message" required maxlength="2000" rows="5" placeholder="Tell me about the role or project"></textarea></div>
+            <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button class="btn btn-primary" type="submit"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-send"/></svg> Send message</button>
+            <p class="form-note" id="formNote">This opens your email app with the message filled in.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p>Designed &amp; built by Mubeen Salman</p>
+      <p>&copy; <span id="year">2026</span> Mubeen Salman. All rights reserved. · Lahore, Pakistan</p>
+    </div>
+  </footer>
+
+  <!-- Project details -->
+  <dialog id="projectModal" class="modal" aria-labelledby="modalTitle">
+    <div class="modal-card glass glass-float">
+      <button type="button" class="icon-btn modal-close" data-close aria-label="Close project details"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></button>
+      <div class="modal-head">
+        <div class="project-badges" id="modalBadges"></div>
+        <h3 id="modalTitle"></h3>
+      </div>
+      <div class="modal-body">
+        <p id="modalDesc" class="project-desc"></p>
+        <h4 class="modal-subtitle">Key highlights</h4>
+        <ul id="modalHighlights" class="modal-highlights"></ul>
+        <h4 class="modal-subtitle">Tools</h4>
+        <div id="modalTools" class="chips"></div>
+      </div>
+      <div class="modal-foot">
+        <a id="modalGithub" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer" hidden><svg class="icon" fill="currentColor" aria-hidden="true" focusable="false"><use href="#i-github"/></svg> View on GitHub</a>
+        <div class="modal-nav">
+          <button type="button" class="icon-btn" id="modalPrev" aria-label="Previous project"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg></button>
+          <span class="count" id="modalCount" aria-live="polite"></span>
+          <button type="button" class="icon-btn" id="modalNext" aria-label="Next project"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Certificate viewer -->
+  <dialog id="lightbox" class="lightbox" aria-label="Certificate preview">
+    <div class="lightbox-card glass glass-float">
+      <img id="lightboxImg" alt="" />
+      <div class="lightbox-bar">
+        <span id="lightboxCaption"></span>
+        <span class="chips">
+          <a id="lightboxDownload" class="btn btn-outline" href="#" download><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-download"/></svg> Download</a>
+          <button type="button" class="btn btn-primary" data-close>Close</button>
+        </span>
+      </div>
+    </div>
+  </dialog>
+
+  <button type="button" class="to-top glass glass-float" id="toTop" aria-label="Back to top"><svg class="icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#i-arrow-up"/></svg></button>
+  <div class="toast glass glass-float" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="projects.js" defer></script>
+  <script src="main.js" defer></script>
+</body>
+</html>
