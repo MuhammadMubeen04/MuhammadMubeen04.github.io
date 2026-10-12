@@ -472,9 +472,9 @@
     $('.modal-body', modal).scrollTop = 0;
     if (history.replaceState) history.replaceState(null, '', '#project-' + p.slug);
   }
-  function openProject(i) {
+  function openProject(i, opener) {
     if (!modal || !DATA[i]) return;
-    if (!modal.open) lastFocus = doc.activeElement;
+    if (!modal.open) lastFocus = opener || doc.activeElement;
     fillProject(i);
     openDialog(modal);
   }
@@ -565,11 +565,240 @@
       if (!endpoint) { openMail(); toast('Opening your email app…'); return; }
       var btn = $('button[type="submit"]', form);
       btn.disabled = true;
-      fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ name: name, email: from, message: msg }) })
+      var payload = { name: name, email: from, message: msg };
+      var accessKey = form.getAttribute('data-access-key');
+      if (accessKey) { payload.access_key = accessKey; payload.subject = 'Portfolio message from ' + name; }
+      fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) })
         .then(function (r) { if (!r.ok) throw new Error('bad status'); form.reset(); toast('Message sent — thank you!'); if (note) note.textContent = 'Sent. I will reply as soon as I can.'; })
         .catch(function () { toast('Could not send — opening your email app instead'); openMail(); })
         .then(function () { btn.disabled = false; });
     });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Services -> contact: prefill the message with the chosen service    */
+  /* ------------------------------------------------------------------ */
+  $$('[data-service]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var msg = $('#cf-msg');
+      if (!msg) return;
+      if (!msg.value.trim()) msg.value = "Hi Mubeen, I'd like to talk about: " + a.getAttribute('data-service') + '.';
+      setTimeout(function () { msg.focus({ preventScroll: true }); }, reduceMotion ? 120 : 1100);
+    });
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* Search / command palette (Ctrl or Cmd + K)                          */
+  /* ------------------------------------------------------------------ */
+  var palette = $('#palette');
+  if (palette) {
+    var pInput = $('#paletteInput');
+    var pList = $('#paletteList');
+    var pEmpty = $('#paletteEmpty');
+    var pAll = null, pShown = [], pIndex = 0, pOpener = null, pPending = null;
+    var SECTIONS = [['home', 'Home'], ['about', 'About me'], ['skills', 'Skills'], ['projects', 'Projects'], ['services', 'Services'],
+                    ['experience', 'Experience'], ['education', 'Education'], ['certificates', 'Certificates'], ['contact', 'Contact']];
+
+    var socialHref = function (label) { var a = $('.hero-socials a[aria-label="' + label + '"]'); return a ? a.href : ''; };
+    var openLink = function (url) { return function () { if (url) win.open(url, '_blank', 'noopener'); }; };
+
+    var buildPalette = function () {
+      pAll = [];
+      SECTIONS.forEach(function (s) {
+        pAll.push({ group: 'Go to', label: s[1], hint: 'Section', keys: s[1] + ' ' + s[0], run: function () { scrollToId(s[0]); } });
+      });
+      [
+        ['Switch light / dark theme', 'Action', 'theme dark light mode', function () { if (themeBtn) themeBtn.click(); }],
+        ['Download resume', 'Action', 'resume cv download pdf', function () { var a = $('.hero-actions a[download]'); if (a) a.click(); }],
+        ['Email me', 'Action', 'email mail contact', function () { win.location.href = 'mailto:' + (form ? form.getAttribute('data-to') : ''); }],
+        ['Copy email address', 'Action', 'copy email', function () { if (copyBtn) copyBtn.click(); }],
+        ['Open GitHub', 'Link', 'github code repositories', openLink(socialHref('GitHub'))],
+        ['Open LinkedIn', 'Link', 'linkedin profile', openLink(socialHref('LinkedIn'))],
+        ['Open Fiverr', 'Link', 'fiverr freelance gigs', openLink(socialHref('Fiverr'))]
+      ].forEach(function (a) { pAll.push({ group: 'Actions', label: a[0], hint: a[1], keys: a[2], run: a[3] }); });
+      DATA.forEach(function (p, i) {
+        pAll.push({
+          group: 'Projects', label: p.title, hint: p.category,
+          keys: [p.category, p.badge, (p.tools || []).join(' '), (p.groups || []).join(' ')].join(' '),
+          run: function () { openProject(i, pOpener); }
+        });
+      });
+    };
+
+    var filterPalette = function (q) {
+      var words = q.toLowerCase().split(/\s+/).filter(Boolean);
+      pShown = [];
+      pAll.forEach(function (it, order) {
+        var hay = (it.label + ' ' + it.keys).toLowerCase();
+        for (var w = 0; w < words.length; w++) if (hay.indexOf(words[w]) === -1) return;
+        var score = 0;
+        if (words.length) {
+          var lab = it.label.toLowerCase();
+          score = lab.indexOf(words[0]) === 0 ? 2 : lab.indexOf(words[0]) > -1 ? 1 : 0;
+        }
+        pShown.push({ it: it, score: score, order: order });
+      });
+      if (words.length) pShown.sort(function (a, b) { return b.score - a.score || a.order - b.order; });
+      pShown = pShown.slice(0, 40).map(function (x) { return x.it; });
+      pIndex = 0;
+      renderPalette(words.length > 0);
+    };
+
+    var renderPalette = function (flat) {
+      var html = '', last = '';
+      pShown.forEach(function (it, i) {
+        if (!flat && it.group !== last) { html += '<li class="palette-group" role="presentation">' + esc(it.group) + '</li>'; last = it.group; }
+        html += '<li class="palette-item" role="option" id="pi-' + i + '" data-i="' + i + '" aria-selected="' + (i === pIndex) + '"><span>' + esc(it.label) + '</span><small>' + esc(it.hint) + '</small></li>';
+      });
+      pList.innerHTML = html;
+      pEmpty.hidden = pShown.length > 0;
+      pList.hidden = pShown.length === 0;
+      pInput.setAttribute('aria-activedescendant', pShown.length ? 'pi-' + pIndex : '');
+    };
+
+    var moveSel = function (to) {
+      if (!pShown.length) return;
+      pIndex = (to + pShown.length) % pShown.length;
+      $$('.palette-item', pList).forEach(function (el, i) { el.setAttribute('aria-selected', String(i === pIndex)); });
+      var cur = $('#pi-' + pIndex);
+      if (cur) cur.scrollIntoView({ block: 'nearest' });
+      pInput.setAttribute('aria-activedescendant', 'pi-' + pIndex);
+    };
+
+    var choose = function (i) {
+      var it = pShown[i];
+      if (!it) return;
+      pPending = it.run;
+      palette.close();
+    };
+
+    var openPalette = function () {
+      if (palette.open || $('dialog[open]')) return;
+      pOpener = doc.activeElement;
+      if (!pAll) buildPalette();
+      pInput.value = '';
+      filterPalette('');
+      openDialog(palette);
+      pInput.focus();
+    };
+
+    palette.addEventListener('close', function () {
+      var run = pPending; pPending = null;
+      if (run) setTimeout(run, 60);                 // run once the dialog has fully closed (scroll lock released)
+    });
+    pInput.addEventListener('input', function () { filterPalette(pInput.value); });
+    pInput.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); moveSel(pIndex + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); moveSel(pIndex - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); moveSel(0); }
+      else if (e.key === 'End') { e.preventDefault(); moveSel(pShown.length - 1); }
+      else if (e.key === 'Enter') { e.preventDefault(); choose(pIndex); }
+    });
+    pList.addEventListener('click', function (e) {
+      var li = e.target.closest('.palette-item');
+      if (li) choose(parseInt(li.getAttribute('data-i'), 10));
+    });
+    pList.addEventListener('pointermove', function (e) {
+      var li = e.target.closest('.palette-item');
+      if (li) { var i = parseInt(li.getAttribute('data-i'), 10); if (i !== pIndex) moveSel(i); }
+    });
+
+    doc.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && !e.altKey && e.key && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (palette.open) palette.close(); else openPalette();
+      }
+    });
+    var searchBtn = $('#searchBtn');
+    if (searchBtn) searchBtn.addEventListener('click', openPalette);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* GitHub activity card (public API, cached; hidden if unavailable)    */
+  /* ------------------------------------------------------------------ */
+  var ghCard = $('#ghCard');
+  if (ghCard && hasIO && win.fetch) {
+    var ghUser = ghCard.getAttribute('data-user');
+    var GH_KEY = 'portfolio-gh', GH_TTL = 30 * 60 * 1000;
+
+    var timeAgo = function (iso) {
+      var s = (Date.parse(iso) - Date.now()) / 1000;
+      var units = [['year', 31536000], ['month', 2592000], ['week', 604800], ['day', 86400], ['hour', 3600], ['minute', 60]];
+      var rtf = win.Intl && Intl.RelativeTimeFormat ? new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' }) : null;
+      for (var i = 0; i < units.length; i++) {
+        if (Math.abs(s) >= units[i][1]) {
+          var v = Math.round(s / units[i][1]);
+          return rtf ? rtf.format(v, units[i][0]) : Math.abs(v) + ' ' + units[i][0] + 's ago';
+        }
+      }
+      return 'just now';
+    };
+
+    var paintGh = function (d) {
+      $('#ghRepos').textContent = d.repos;
+      $('#ghFollowers').textContent = d.followers;
+      var ul = $('#ghList');
+      ul.innerHTML = '';
+      d.list.forEach(function (r) {
+        if (!/^https:\/\/github\.com\//.test(r.url)) return;
+        var li = doc.createElement('li');
+        var a = doc.createElement('a');
+        a.className = 'gh-repo'; a.href = r.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        var name = doc.createElement('span'); name.className = 'gh-repo-name'; name.textContent = r.name;
+        var when = doc.createElement('span'); when.className = 'gh-when'; when.textContent = 'Updated ' + timeAgo(r.pushed);
+        var meta = doc.createElement('span'); meta.className = 'gh-repo-meta';
+        if (r.lang) { var l = doc.createElement('span'); var dot = doc.createElement('i'); l.appendChild(dot); l.appendChild(doc.createTextNode(r.lang)); meta.appendChild(l); }
+        if (r.stars) { var st = doc.createElement('span'); st.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><use href="#i-star"/></svg>'; st.appendChild(doc.createTextNode(String(r.stars))); meta.appendChild(st); }
+        a.appendChild(name); a.appendChild(when); if (meta.childNodes.length) a.appendChild(meta);
+        li.appendChild(a); ul.appendChild(li);
+      });
+      ghCard.hidden = false;
+    };
+
+    var loadGh = function () {
+      var cached = null;
+      try { cached = JSON.parse(store.get(GH_KEY) || 'null'); } catch (e) { cached = null; }
+      if (cached && Date.now() - cached.t < GH_TTL) { paintGh(cached.d); return; }
+      var base = 'https://api.github.com/users/' + encodeURIComponent(ghUser);
+      Promise.all([fetch(base), fetch(base + '/repos?sort=pushed&per_page=12')])
+        .then(function (rs) {
+          if (!rs[0].ok || !rs[1].ok) throw new Error('github unavailable');
+          return Promise.all([rs[0].json(), rs[1].json()]);
+        })
+        .then(function (res) {
+          var d = {
+            repos: res[0].public_repos, followers: res[0].followers,
+            list: res[1].filter(function (r) { return !r.fork; }).slice(0, 3).map(function (r) {
+              return { name: r.name, url: r.html_url, lang: r.language, stars: r.stargazers_count, pushed: r.pushed_at };
+            })
+          };
+          store.set(GH_KEY, JSON.stringify({ t: Date.now(), d: d }));
+          paintGh(d);
+        })
+        .catch(function () { if (cached) paintGh(cached.d); });   // offline / rate-limited: show last known data, else stay hidden
+    };
+
+    var aboutSec = $('#about');
+    if (aboutSec) {
+      var ghIO = new IntersectionObserver(function (en) {
+        if (en[0].isIntersecting) { ghIO.disconnect(); loadGh(); }
+      }, { rootMargin: '700px 0px' });
+      ghIO.observe(aboutSec);
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Visitor stats (GoatCounter) — off until an address is set in <meta> */
+  /* ------------------------------------------------------------------ */
+  var statsMeta = $('meta[name="stats-endpoint"]');
+  var statsUrl = statsMeta ? (statsMeta.getAttribute('content') || '').trim() : '';
+  if (/^https:\/\/[^\s"'<>]+$/.test(statsUrl) && /^https?:$/.test(location.protocol) &&
+      !/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && navigator.doNotTrack !== '1') {
+    var gs = doc.createElement('script');
+    gs.async = true;
+    gs.src = 'https://gc.zgo.at/count.js';
+    gs.setAttribute('data-goatcounter', statsUrl);
+    doc.head.appendChild(gs);
   }
 
   /* ------------------------------------------------------------------ */
