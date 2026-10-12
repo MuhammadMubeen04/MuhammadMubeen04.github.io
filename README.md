@@ -11,6 +11,7 @@ Plain HTML / CSS / JavaScript. No build step: open `index.html`, or upload the f
 | `main.js` | Interactions, filters, dialogs, theme, adaptive performance |
 | `projects.js` | **Project data** (cards' dialog, hero chart, filters) |
 | `sw.js`, `manifest.webmanifest`, `icons/` | Offline support + "install as app" |
+| `certificates/` | Each certificate has `-preview.webp` (row image), `-full.webp` (viewer) and the original (download) |
 | `og-image.png` | Link-preview image for WhatsApp / LinkedIn / X |
 
 ## Things to do after you deploy
@@ -19,6 +20,18 @@ Plain HTML / CSS / JavaScript. No build step: open `index.html`, or upload the f
 2. Optional — receive contact-form messages in your inbox without an email app: create a free form at
    Formspree or Web3Forms and paste its URL into `data-endpoint=""` on `<form id="contactForm">`.
 3. After changing files on a live site, bump `VERSION` in `sw.js` so returning visitors get the update.
+
+## Optional features you switch on yourself
+| Feature | Where | What to do |
+|---|---|---|
+| Your photo | `index.html`, search for `profile-placeholder.svg` | Save your photo as `images/profile.jpg` (square, 600x600+) and change that one `src` to `images/profile.jpg` |
+| Contact form to your inbox | `<form id="contactForm" data-endpoint="">` | Create a free Formspree form and paste its URL into `data-endpoint`. For Web3Forms use `https://api.web3forms.com/submit` and put your key in `data-access-key` |
+| Visitor stats | `<meta name="stats-endpoint" content="">` | Create a free GoatCounter site and paste `https://YOURNAME.goatcounter.com/count` into `content`. Stays off on localhost and for visitors with Do Not Track |
+| Verify buttons | each certificate's `cert-actions` block | Copy an existing `Verify` link line and change the `href` (only for certificates that have a public verify page) |
+| Services text | `<section id="services">` | Edit the six service cards |
+
+Search (Ctrl+K / the magnifier in the nav) and the GitHub activity card need no setup.
+The GitHub card uses the username in `data-user="MuhammadMubeen04"`.
 
 ## Adding a project
 Add an object to `projects.js`, then copy any `<article class="project-card">` in `index.html`
