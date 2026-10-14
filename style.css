@@ -412,14 +412,14 @@ html[data-theme="light"] .glass-float::before {
   contain-intrinsic-size: auto var(--cis, 52rem);
 }
 #about { --cis: 1500px; } #skills { --cis: 1070px; } #projects { --cis: 3140px; } #services { --cis: 2380px; }
-#experience { --cis: 1780px; } #education { --cis: 770px; } #certificates { --cis: 4730px; } #contact { --cis: 1230px; }
+#experience { --cis: 1780px; } #education { --cis: 770px; } #certificates { --cis: 5550px; } #contact { --cis: 1230px; }
 @media (min-width: 40rem) {
   #about { --cis: 1050px; } #skills { --cis: 650px; } #projects { --cis: 2610px; } #services { --cis: 1380px; }
-  #experience { --cis: 1020px; } #education { --cis: 590px; } #certificates { --cis: 3260px; } #contact { --cis: 990px; }
+  #experience { --cis: 1020px; } #education { --cis: 590px; } #certificates { --cis: 3880px; } #contact { --cis: 990px; }
 }
 @media (min-width: 64rem) {
   #about { --cis: 830px; } #skills { --cis: 580px; } #projects { --cis: 1820px; } #services { --cis: 1100px; }
-  #experience { --cis: 900px; } #education { --cis: 650px; } #certificates { --cis: 2670px; } #contact { --cis: 720px; }
+  #experience { --cis: 900px; } #education { --cis: 650px; } #certificates { --cis: 3300px; } #contact { --cis: 720px; }
 }
 .section[id] {
   scroll-margin-top: 0;
