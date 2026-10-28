@@ -1,16 +1,3 @@
-/* =====================================================================
-   Mubeen Salman, Portfolio
-   Paper + ink + one vermilion accent. Liquid glass over flat shapes.
-   Type: Newsreader (headings, text) and IBM Plex Mono (labels, data).
-
-   Performance tiers: <html data-tier="high|mid|low"> only changes how much
-   backdrop blur is paid for. Every surface keeps its glass look.
-     high  full blur on all glass
-     mid   lighter blur
-     low   floating surfaces (nav, menus, dialogs) keep real blur; cards use
-           pre-composited glass (same tint + rim light, no blur cost)
-   ===================================================================== */
-
 /* ---------- 1. Tokens ---------- */
 :root {
   color-scheme: dark;
