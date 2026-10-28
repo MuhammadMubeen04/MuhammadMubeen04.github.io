@@ -1,6 +1,4 @@
-/* Offline support. HTML/CSS/JS are network-first (so deploys show up immediately);
-   images and fonts are cache-first (they rarely change). Bump VERSION to force a refresh. */
-const VERSION = 'v2';
+const VERSION = 'v4';
 const CORE = `core-${VERSION}`;
 const RUNTIME = `runtime-${VERSION}`;
 const PRECACHE = [
