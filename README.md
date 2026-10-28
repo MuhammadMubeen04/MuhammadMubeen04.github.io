@@ -21,6 +21,12 @@ Plain HTML / CSS / JavaScript. No build step: open `index.html`, or upload the f
    Formspree or Web3Forms and paste its URL into `data-endpoint=""` on `<form id="contactForm">`.
 3. After changing files on a live site, bump `VERSION` in `sw.js` so returning visitors get the update.
 
+## Design notes
+- Palette: paper `#F2EEE5`, ink `#14181A`, one vermilion accent. Dark mode uses the same three ideas. Change the look in the `:root` / `html[data-theme="light"]` blocks at the top of `style.css`.
+- Type: Newsreader (headings and text) and IBM Plex Mono (labels, dates, numbers), loaded from Google Fonts.
+- Liquid glass is kept: translucent panels with backdrop blur, a bright rim and soft shadow, over three flat shapes and a graph-paper grid. Reading text sits on glass; only large display type sits directly on the shapes.
+- Placeholders still to fill in: your photo (see below) and, if you want them shown, Fiverr prices and delivery times (search `PLACEHOLDER` in `index.html`).
+
 ## Optional features you switch on yourself
 | Feature | Where | What to do |
 |---|---|---|
@@ -31,6 +37,13 @@ Plain HTML / CSS / JavaScript. No build step: open `index.html`, or upload the f
 | Services text | `<section id="services">` | Edit the six service cards |
 
 Search (Ctrl+K / the magnifier in the nav) and the GitHub activity card need no setup.
+
+## Built-in helpers (no setup)
+- Project search box next to the filters; it combines with the filter buttons.
+- Skills with a small number (like Python 14) are links: they show every project that uses that tool. Tools inside a project dialog work the same way.
+- "Copy link" in a project dialog copies a link that opens that exact project.
+- Tap a certificate ID or student ID to copy it.
+- If you ever change the layout width, the left ink bar sizes itself to the page margin and hides when there is no room.
 The GitHub card uses the username in `data-user="MuhammadMubeen04"`.
 
 ## Adding a project
