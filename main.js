@@ -1,12 +1,3 @@
-/**
- * Mubeen Salman — Portfolio
- *
- * Performance notes
- *  - No scroll listeners that read layout. Everything scroll-driven (navbar state,
- *    scroll-spy, reveals, back-to-top, orb pausing) uses IntersectionObserver.
- *  - Pointer effects run through ONE delegated, rAF-throttled handler.
- *  - A tiny frame-rate probe lowers the effects tier on slow devices (see "Performance tier").
- */
 (function () {
   'use strict';
 
@@ -96,9 +87,9 @@
   var metaTheme = $('meta[name="theme-color"]');
   function applyTheme(t) {
     root.setAttribute('data-theme', t);
-    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#f4f6fb' : '#070b14');
+    if (metaTheme) metaTheme.setAttribute('content', t === 'light' ? '#F2EEE5' : '#0D1110');
   }
-  applyTheme(root.getAttribute('data-theme') || 'dark');
+  applyTheme(root.getAttribute('data-theme') || 'light');
 
   if (themeBtn) {
     themeBtn.addEventListener('click', function (e) {
@@ -141,7 +132,7 @@
   var mobileLinks = $$('.mobile-link');
   var currentId = '';
 
-  // "Scrolled" state via a sentinel — no scroll handler
+  // "Scrolled" state via a sentinel, no scroll handler
   var sentinel = doc.createElement('div');
   sentinel.setAttribute('aria-hidden', 'true');
   sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:24px;pointer-events:none';
@@ -254,37 +245,18 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* Hero visibility: pause orbs off-screen, back-to-top button          */
+  /* Hero visibility: back-to-top button                                 */
   /* ------------------------------------------------------------------ */
   var toTop = $('#toTop');
   var heroVisible = true;
   var dialogsOpen = 0;
-  var orbs = $$('.orb');
-  function syncOrbs() {
-    var pause = !heroVisible || dialogsOpen > 0 || doc.hidden;
-    if (pause === root.classList.contains('orbs-paused')) return;
-    if (pause) {
-      // Freeze each orb where it currently is, then drop the animation entirely
-      var pos = orbs.map(function (o) {
-        var m = new DOMMatrix(getComputedStyle(o).transform);
-        return [m.m41, m.m42];
-      });
-      orbs.forEach(function (o, i) {
-        o.style.setProperty('--fx', pos[i][0].toFixed(1) + 'px');
-        o.style.setProperty('--fy', pos[i][1].toFixed(1) + 'px');
-      });
-    }
-    root.classList.toggle('orbs-paused', pause);
-  }
   var hero = $('#home');
   if (hasIO && hero) {
     new IntersectionObserver(function (entries) {
       heroVisible = entries[0].isIntersecting;
       if (toTop) toTop.classList.toggle('show', !heroVisible);
-      syncOrbs();
     }, { threshold: 0 }).observe(hero);
   }
-  doc.addEventListener('visibilitychange', syncOrbs);
   if (toTop) toTop.addEventListener('click', function () { scrollToId('home'); });
 
   /* ------------------------------------------------------------------ */
@@ -303,7 +275,7 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* Pointer: spotlight on glass cards, gentle tilt on the hero card     */
+  /* Pointer: highlight that follows the cursor on glass cards           */
   /* ------------------------------------------------------------------ */
   if (finePointer) {
     var spotEl = null, spotX = 0, spotY = 0, spotRaf = 0;
@@ -321,24 +293,6 @@
         });
       }
     }, { passive: true });
-
-    var card = $('.hero-card');
-    if (card && !reduceMotion) {
-      var cr = null, tiltRaf = 0, tx = 0, ty = 0;
-      card.addEventListener('pointerenter', function () { cr = card.getBoundingClientRect(); });
-      card.addEventListener('pointermove', function (e) {
-        if (getTier() !== 'high' || !cr) return;
-        tx = (e.clientX - cr.left) / cr.width - 0.5;
-        ty = (e.clientY - cr.top) / cr.height - 0.5;
-        if (!tiltRaf) {
-          tiltRaf = requestAnimationFrame(function () {
-            tiltRaf = 0;
-            card.style.transform = 'perspective(900px) rotateX(' + (-ty * 5).toFixed(2) + 'deg) rotateY(' + (tx * 5).toFixed(2) + 'deg)';
-          });
-        }
-      }, { passive: true });
-      card.addEventListener('pointerleave', function () { card.style.transform = ''; });
-    }
   }
 
   /* ------------------------------------------------------------------ */
@@ -355,7 +309,8 @@
   var toolPillLabel = $('#toolPillLabel');
   var heroRows = $$('.hc-row');
   var mobileMQ = win.matchMedia('(max-width: 43.69rem)');
-  var state = { group: 'all', tool: '', limit: 0 };
+  var state = { group: 'all', tool: '', search: '', limit: 0 };
+  var searchInput = $('#projectSearch');
 
   function pageSize() { return mobileMQ.matches ? 6 : 9; }
   state.limit = pageSize();
@@ -363,7 +318,8 @@
   function cardMatches(c) {
     var okGroup = state.group === 'all' || c.getAttribute('data-groups').split(' ').indexOf(state.group) > -1;
     var okTool = !state.tool || c.getAttribute('data-tools').split('|').indexOf(state.tool) > -1;
-    return okGroup && okTool;
+    var okSearch = !state.search || (c._hay || (c._hay = c.textContent.toLowerCase())).indexOf(state.search) > -1;
+    return okGroup && okTool && okSearch;
   }
   function renderProjects() {
     if (!cards.length) return;
@@ -414,7 +370,7 @@
   var clearTool = $('#toolPillClear');
   if (clearTool) clearTool.addEventListener('click', function () { state.tool = ''; resetPaging(); renderProjects(); });
   var resetBtn = $('#resetFilters');
-  if (resetBtn) resetBtn.addEventListener('click', function () { state.group = 'all'; state.tool = ''; resetPaging(); renderProjects(); });
+  if (resetBtn) resetBtn.addEventListener('click', function () { state.group = 'all'; state.tool = ''; state.search = ''; if (searchInput) searchInput.value = ''; resetPaging(); renderProjects(); });
   if (showMore) {
     showMore.addEventListener('click', function () {
       var before = cards.filter(function (c) { return !c.classList.contains('is-hidden'); }).length;
@@ -423,6 +379,16 @@
       var vis = cards.filter(function (c) { return !c.classList.contains('is-hidden'); });
       var next = vis[before];
       if (next) { var b = $('.project-detail-btn', next); if (b) b.focus({ preventScroll: true }); }
+    });
+  }
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      state.search = searchInput.value.trim().toLowerCase();
+      resetPaging();
+      renderProjects();
+    });
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && searchInput.value) { e.stopPropagation(); searchInput.value = ''; state.search = ''; resetPaging(); renderProjects(); }
     });
   }
   renderProjects();
@@ -435,12 +401,10 @@
     d.showModal();
     dialogsOpen++;
     root.classList.add('modal-open');
-    syncOrbs();
   }
   function onDialogClosed() {
     dialogsOpen = Math.max(0, dialogsOpen - 1);
     if (!dialogsOpen) root.classList.remove('modal-open');
-    syncOrbs();
   }
   $$('dialog').forEach(function (d) {
     d.addEventListener('close', onDialogClosed);
@@ -465,7 +429,7 @@
     $('#modalDesc').textContent = p.desc;
     $('#modalBadges').innerHTML = '<span class="badge">' + esc(p.badge) + '</span><span class="badge badge-soft">' + esc(p.category) + '</span>';
     $('#modalHighlights').innerHTML = (p.highlights || []).map(function (h) { return '<li>' + esc(h) + '</li>'; }).join('');
-    $('#modalTools').innerHTML = (p.tools || []).map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('');
+    $('#modalTools').innerHTML = (p.tools || []).map(function (t) { return '<button type="button" class="chip chip-btn" data-tool="' + esc(t) + '" title="Show every project that uses ' + esc(t) + '">' + esc(t) + '</button>'; }).join('');
     var gh = $('#modalGithub');
     if (p.github) { gh.hidden = false; gh.href = p.github; } else { gh.hidden = true; gh.removeAttribute('href'); }
     $('#modalCount').textContent = (i + 1) + ' / ' + DATA.length;
@@ -559,7 +523,7 @@
       var endpoint = form.getAttribute('data-endpoint');
       var openMail = function () {
         var subject = 'Portfolio message from ' + name;
-        var body = msg + '\n\n— ' + name + ' (' + from + ')';
+        var body = msg + '\n\n' + name + ' (' + from + ')';
         win.location.href = 'mailto:' + form.getAttribute('data-to') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
       };
       if (!endpoint) { openMail(); toast('Opening your email app…'); return; }
@@ -569,8 +533,8 @@
       var accessKey = form.getAttribute('data-access-key');
       if (accessKey) { payload.access_key = accessKey; payload.subject = 'Portfolio message from ' + name; }
       fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) })
-        .then(function (r) { if (!r.ok) throw new Error('bad status'); form.reset(); toast('Message sent — thank you!'); if (note) note.textContent = 'Sent. I will reply as soon as I can.'; })
-        .catch(function () { toast('Could not send — opening your email app instead'); openMail(); })
+        .then(function (r) { if (!r.ok) throw new Error('bad status'); form.reset(); toast('Message sent. Thank you!'); if (note) note.textContent = 'Sent. I will reply as soon as I can.'; })
+        .catch(function () { toast('Could not send. Opening your email app instead'); openMail(); })
         .then(function () { btn.disabled = false; });
     });
   }
@@ -788,7 +752,7 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* Visitor stats (GoatCounter) — off until an address is set in <meta> */
+  /* Visitor stats (GoatCounter), off until an address is set in <meta> */
   /* ------------------------------------------------------------------ */
   var statsMeta = $('meta[name="stats-endpoint"]');
   var statsUrl = statsMeta ? (statsMeta.getAttribute('content') || '').trim() : '';
@@ -817,6 +781,103 @@
       it.classList.add('current');
       var d = $('.exp-date', it);
       if (d) d.insertAdjacentHTML('afterbegin', '<span class="now-pill">Current</span>');
+    }
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* ------------------------------------------------------------------ */
+  /* Small helpers that connect sections                                  */
+  /* ------------------------------------------------------------------ */
+  var copyText = function (text, message) {
+    var done = function () { toast(message); };
+    var fallback = function () {
+      var ta = doc.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      doc.body.appendChild(ta); ta.select();
+      try { doc.execCommand('copy'); done(); } catch (err) { toast(text); }
+      ta.remove();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  };
+
+  var filterByTool = function (tool) {
+    state.tool = tool; state.group = 'all'; state.search = '';
+    if (searchInput) searchInput.value = '';
+    resetPaging();
+    renderProjects();
+    scrollToId('projects', false);
+  };
+
+  /* Skills that match a project tool become filters, with the real project count */
+  var toolCounts = {};
+  DATA.forEach(function (p) { (p.tools || []).forEach(function (t) { toolCounts[t] = (toolCounts[t] || 0) + 1; }); });
+  $$('.stack-row dd span').forEach(function (sp) {
+    var name = sp.textContent.trim();
+    if (!toolCounts[name]) return;
+    var b = doc.createElement('button');
+    b.type = 'button'; b.className = 'tool-link'; b.setAttribute('data-tool', name);
+    b.setAttribute('aria-label', name + ': used in ' + toolCounts[name] + ' projects. Show them.');
+    b.appendChild(doc.createTextNode(name));
+    var sup = doc.createElement('sup'); sup.textContent = String(toolCounts[name]); b.appendChild(sup);
+    sp.textContent = ''; sp.appendChild(b);
+  });
+  var stackEl = $('.stack');
+  if (stackEl) stackEl.addEventListener('click', function (e) {
+    var b = e.target.closest('.tool-link');
+    if (b) filterByTool(b.getAttribute('data-tool'));
+  });
+
+  /* Tools in the project dialog are filters too */
+  var modalTools = $('#modalTools');
+  if (modalTools && modal) modalTools.addEventListener('click', function (e) {
+    var b = e.target.closest('.chip-btn');
+    if (!b) return;
+    var tool = b.getAttribute('data-tool');
+    modal.close();
+    setTimeout(function () { filterByTool(tool); }, 80);
+  });
+
+  /* Copy the link to the open project */
+  var shareBtn = $('#modalShare');
+  if (shareBtn) shareBtn.addEventListener('click', function () {
+    var p = DATA[modalIndex];
+    if (!p) return;
+    var url = win.location.href.split('#')[0] + '#project-' + p.slug;
+    if (navigator.share && win.matchMedia('(pointer: coarse)').matches) {
+      navigator.share({ title: p.title, url: url }).catch(function () { /* cancelled */ });
+    } else copyText(url, 'Link to this project copied');
+  });
+
+  /* One tap copies a certificate or student ID */
+  $$('.cert-meta li').forEach(function (li) {
+    var label = li.querySelector('strong');
+    if (!label || !/(Certificate|Student) ID/.test(label.textContent)) return;
+    var value = li.textContent.replace(label.textContent, '').trim();
+    if (!value) return;
+    var b = doc.createElement('button');
+    b.type = 'button'; b.className = 'copy-id'; b.textContent = value;
+    b.title = 'Copy ID'; b.setAttribute('aria-label', 'Copy ' + label.textContent.replace(':', '') + ' ' + value);
+    b.addEventListener('click', function () { copyText(value, 'ID copied'); });
+    li.textContent = '';
+    li.appendChild(label); li.appendChild(doc.createTextNode(' ')); li.appendChild(b);
+  });
+
+  /* Section counters ("18 projects") count the real elements on the page */
+  $$('[data-count]').forEach(function (el) {
+    var n = $$(el.getAttribute('data-count')).length;
+    if (n) el.textContent = n + ' ' + el.getAttribute('data-label');
+  });
+
+  /* "Example: ..." links in Services open that project's dialog */
+  doc.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-open-project]');
+    if (!a) return;
+    e.preventDefault();
+    var slug = a.getAttribute('data-open-project');
+    for (var i = 0; i < DATA.length; i++) {
+      if (DATA[i].slug === slug) { openProject(i, a); return; }
     }
   });
 
