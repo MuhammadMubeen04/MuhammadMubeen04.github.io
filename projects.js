@@ -1,9 +1,3 @@
-/**
- * Project data — single source of truth for the cards, the details dialog,
- * the hero chart and the filters. To add a project: append an object here and add a
- * matching card in index.html (copy any existing .project-card and change data-project).
- * groups: analytics | ml | web  (used by the filter chips)
- */
 window.PROJECTS = [
   {
     title: "RAG Copilot – Hybrid Search & Reranking",
